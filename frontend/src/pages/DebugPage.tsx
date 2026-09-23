@@ -60,7 +60,7 @@ const DebugPage: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-3">
                     <span className="text-xs text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded">
-                      ID: {chunk.id || `chunk-${chunk.chunkIndex}`}
+                      Chunk #{chunk.chunkIndex}
                     </span>
                     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                       chunk.similarity > 0.8 ? 'bg-green-100 text-green-800' : 

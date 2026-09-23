@@ -158,43 +158,43 @@ const ChatPage: React.FC = () => {
       </div>
 
       {/* Main Chat Area */}
-      <div className="flex flex-1 flex-col h-full overflow-hidden relative">
+      <div className="flex flex-1 flex-col h-full overflow-hidden relative bg-gradient-to-b from-white to-slate-50/50">
         {!activeConversationId && messages.length === 0 ? (
-          <div className="flex flex-1 items-center justify-center flex-col text-center px-4">
-            <div className="h-16 w-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4">
-              <Bot className="h-8 w-8" />
+          <div className="flex flex-1 items-center justify-center flex-col text-center px-4 animate-in fade-in duration-700">
+            <div className="h-20 w-20 bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-2xl shadow-xl flex items-center justify-center mb-6 transform transition-transform hover:scale-105">
+              <Bot className="h-10 w-10" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">How can I help you today?</h2>
-            <p className="text-gray-500 max-w-md">
-              Ask questions about your documents, generate tasks, or interact with tools.
+            <h2 className="text-3xl font-black text-gray-900 tracking-tight mb-3">How can I help you today?</h2>
+            <p className="text-gray-500 max-w-md text-base leading-relaxed">
+              Ask questions about your documents, generate tasks, or interact with tools securely within your workspace.
             </p>
           </div>
         ) : (
-          <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
+          <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-8 scroll-smooth">
             {messages.map((msg, idx) => (
-              <div key={msg.id || idx} className={`flex ${msg.role === 'USER' ? 'justify-end' : 'justify-start'}`}>
+              <div key={msg.id || idx} className={`flex ${msg.role === 'USER' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`}>
                 <div className={`flex max-w-3xl space-x-3 ${msg.role === 'USER' ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                  <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-                    msg.role === 'USER' ? 'bg-blue-600 text-white' : 'bg-gray-800 text-white'
+                  <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl shadow-sm ${
+                    msg.role === 'USER' ? 'bg-gradient-to-tr from-indigo-600 to-indigo-500 text-white' : 'bg-gradient-to-tr from-gray-800 to-gray-700 text-white'
                   }`}>
                     {msg.role === 'USER' ? <User className="h-5 w-5" /> : <Bot className="h-5 w-5" />}
                   </div>
                   <div className="flex flex-col space-y-2 max-w-[calc(100vw-6rem)] md:max-w-2xl">
-                    <div className={`rounded-2xl px-4 py-3 text-sm ${
+                    <div className={`rounded-2xl px-5 py-3.5 text-sm/relaxed shadow-sm ${
                       msg.role === 'USER' 
-                        ? 'bg-blue-600 text-white rounded-tr-none' 
-                        : 'bg-gray-100 text-gray-800 rounded-tl-none border border-gray-200'
+                        ? 'bg-indigo-600 text-white rounded-tr-sm' 
+                        : 'bg-white text-gray-800 rounded-tl-sm border border-gray-100'
                     }`}>
                       <div className="whitespace-pre-wrap">{msg.content}</div>
                     </div>
                     
                     {/* Tool Calls indicator */}
                     {msg.toolCalls && msg.toolCalls.length > 0 && (
-                      <div className="flex flex-col space-y-1 mt-1">
+                      <div className="flex flex-col space-y-1.5 mt-2">
                         {msg.toolCalls.map((tc: any, i: number) => (
-                          <div key={i} className="flex items-center space-x-1 text-xs text-gray-500 bg-gray-50 border border-gray-200 rounded px-2 py-1 w-max">
-                            <Wrench className="h-3 w-3" />
-                            <span>Executed: <span className="font-mono">{tc.name || 'tool'}</span></span>
+                          <div key={i} className="flex items-center space-x-1.5 text-[11px] font-semibold tracking-wide text-indigo-600 bg-indigo-50/50 border border-indigo-100 rounded-md px-2.5 py-1.5 w-max shadow-sm">
+                            <Wrench className="h-3.5 w-3.5" />
+                            <span>Executed: <span className="font-mono uppercase tracking-wider">{tc.name || 'tool'}</span></span>
                           </div>
                         ))}
                       </div>
@@ -202,12 +202,12 @@ const ChatPage: React.FC = () => {
 
                     {/* Citations */}
                     {msg.citations && msg.citations.length > 0 && (
-                      <div className="mt-2 flex flex-wrap gap-2">
+                      <div className="mt-3 flex flex-wrap gap-2">
                         {msg.citations.map((cite, i) => (
-                          <div key={i} className="flex items-center space-x-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-xs text-gray-600 shadow-sm cursor-help" title={cite.content}>
-                            <FileText className="h-3 w-3 text-blue-500" />
-                            <span className="truncate max-w-[150px]">{cite.documentName}</span>
-                            {cite.page && <span className="text-gray-400">p.{cite.page}</span>}
+                          <div key={i} className="group flex items-center space-x-1.5 rounded-lg border border-gray-200/60 bg-white/50 backdrop-blur-sm px-2.5 py-1.5 text-xs font-medium text-gray-600 shadow-sm transition-all hover:border-indigo-300 hover:shadow-md cursor-help" title={cite.content}>
+                            <FileText className="h-3.5 w-3.5 text-indigo-500 group-hover:text-indigo-600" />
+                            <span className="truncate max-w-[150px] text-gray-700 group-hover:text-gray-900">{cite.documentName}</span>
+                            {cite.page && <span className="text-gray-400 bg-gray-100 px-1.5 rounded-sm">p.{cite.page}</span>}
                           </div>
                         ))}
                       </div>
@@ -218,25 +218,25 @@ const ChatPage: React.FC = () => {
             ))}
             
             {isLoading && (
-              <div className="flex justify-start">
+              <div className="flex justify-start animate-in fade-in duration-300">
                 <div className="flex space-x-3">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-800 text-white">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-gray-800 to-gray-700 text-white shadow-sm">
                     <Bot className="h-5 w-5" />
                   </div>
-                  <div className="rounded-2xl rounded-tl-none bg-gray-100 px-4 py-3 text-sm border border-gray-200 flex items-center space-x-1">
-                    <div className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="h-2 w-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="h-2 w-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                  <div className="rounded-2xl rounded-tl-sm bg-white px-5 py-4 text-sm border border-gray-100 shadow-sm flex items-center space-x-2">
+                    <div className="h-2 w-2 bg-indigo-400/60 rounded-full animate-bounce"></div>
+                    <div className="h-2 w-2 bg-indigo-400/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="h-2 w-2 bg-indigo-400/60 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
                   </div>
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
+            <div ref={messagesEndRef} className="h-4" />
           </div>
         )}
 
         {/* Input Area */}
-        <div className="border-t border-gray-200 bg-white p-4">
+        <div className="border-t border-gray-200/60 bg-white/80 backdrop-blur-xl p-4 md:p-5 relative z-10">
           <div className="mx-auto max-w-4xl relative">
             <form onSubmit={handleSend} className="relative flex items-center">
               <input
@@ -244,18 +244,18 @@ const ChatPage: React.FC = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Message DocAI..."
-                className="w-full rounded-full border border-gray-300 bg-gray-50 pl-4 pr-12 py-3 text-sm focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 shadow-sm"
+                className="w-full rounded-2xl border border-gray-200 bg-white pl-5 pr-14 py-3.5 text-sm text-gray-900 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 shadow-sm transition-all outline-none"
                 disabled={isLoading}
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
-                className="absolute right-2 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700 disabled:bg-gray-300 disabled:text-gray-500 transition-colors"
+                className="absolute right-2 flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-md hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none transition-all"
               >
                 <Send className="h-4 w-4 ml-0.5" />
               </button>
             </form>
-            <div className="text-center mt-2 text-[10px] text-gray-400">
+            <div className="text-center mt-3 text-[11px] font-medium text-gray-400 tracking-wide">
               DocAI can make mistakes. Consider verifying important information.
             </div>
           </div>
