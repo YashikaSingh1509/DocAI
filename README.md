@@ -80,7 +80,7 @@ Open `http://localhost:5173` in your browser.
 
 1. **Extraction**: `pdf-parse` reads PDF files.
 2. **Chunking**: Text is split into ~600 token chunks with 100 token overlap.
-3. **Embeddings**: `text-embedding-004` from Gemini embeds the chunks.
+3. **Embeddings**: `gemini-embedding-2` from Gemini embeds the chunks (with `outputDimensionality: 768`).
 4. **pgvector**: Chunks and embeddings are saved in the `document_chunks` table. Crucially, the `workspace_id` is stored on every chunk.
 5. **Retrieval**: The SQL query enforces `WHERE workspace_id = $1` BEFORE calculating vector similarities, ensuring strict data isolation.
 
